@@ -1,16 +1,16 @@
 /**
  * Copyright (C) 2014 android10.org. All rights reserved.
+ *
  * @author Fernando Cejas (the android10 coder)
  */
 package org.android10.gintonic.aspect;
 
-import org.android10.gintonic.internal.DebugLog;
-import org.android10.gintonic.internal.StopWatch;
+import android.util.Log;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Aspect representing the cross cutting-concern: Method and Constructor Tracing.
@@ -18,30 +18,39 @@ import org.aspectj.lang.reflect.MethodSignature;
 @Aspect
 public class TraceAspect {
 
+//    private static final String POINTCUT_METHOD =
+//            "execution(* *.*(..))";
+
+  //    private static final String POINTCUT_METHOD =
+//            "execution(public void org.android10.viewgroupperformance.activity.MainActivity.test(..))";
   private static final String POINTCUT_METHOD =
-      "execution(@org.android10.gintonic.annotation.DebugTrace * *(..))";
+          "execution(public void android.view.View.OnClickListener.onClick(..))";
+
 
   private static final String POINTCUT_CONSTRUCTOR =
-      "execution(@org.android10.gintonic.annotation.DebugTrace *.new(..))";
+          "execution(@org.android10.gintonic.annotation.DebugTrace *.new(..))";
 
   @Pointcut(POINTCUT_METHOD)
-  public void methodAnnotatedWithDebugTrace() {}
+  public void methodAnnotatedWithDebugTrace() {
+  }
 
   @Pointcut(POINTCUT_CONSTRUCTOR)
-  public void constructorAnnotatedDebugTrace() {}
+  public void constructorAnnotatedDebugTrace() {
+  }
 
   @Around("methodAnnotatedWithDebugTrace() || constructorAnnotatedDebugTrace()")
   public Object weaveJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
-    MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-    String className = methodSignature.getDeclaringType().getSimpleName();
-    String methodName = methodSignature.getName();
-
-    final StopWatch stopWatch = new StopWatch();
-    stopWatch.start();
+//        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+//        String className = methodSignature.getDeclaringType().getSimpleName();
+//        String methodName = methodSignature.getName();
+    Log.e("do it", "do it before");
+//        final StopWatch stopWatch = new StopWatch();
+//        stopWatch.start();
     Object result = joinPoint.proceed();
-    stopWatch.stop();
-
-    DebugLog.log(className, buildLogMessage(methodName, stopWatch.getTotalTimeMillis()));
+    Log.e("do it", "do it after");
+//        stopWatch.stop();
+//
+//        DebugLog.log(className, buildLogMessage(methodName, stopWatch.getTotalTimeMillis()));
 
     return result;
   }
@@ -49,7 +58,7 @@ public class TraceAspect {
   /**
    * Create a log message.
    *
-   * @param methodName A string with the method name.
+   * @param methodName     A string with the method name.
    * @param methodDuration Duration of the method in milliseconds.
    * @return A string representing message.
    */
