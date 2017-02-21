@@ -6,8 +6,8 @@ package org.android10.viewgroupperformance.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
-import org.android10.viewgroupperformance.R;
 
 /**
  *
@@ -23,5 +23,12 @@ public class LinearLayoutTestActivity extends Activity {
 
     myLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutOne);
     myLinearLayout.invalidate();
+
+    myLinearLayout.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+
+      }
+    });
   }
 }

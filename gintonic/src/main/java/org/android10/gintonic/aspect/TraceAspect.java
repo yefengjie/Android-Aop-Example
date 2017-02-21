@@ -6,6 +6,7 @@
 package org.android10.gintonic.aspect;
 
 import android.util.Log;
+import android.view.View;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -13,6 +14,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Aspect representing the cross cutting-concern: Method and Constructor Tracing.
@@ -42,9 +44,9 @@ public class TraceAspect {
 
     @Around("methodAnnotatedWithDebugTrace() || constructorAnnotatedDebugTrace()")
     public Object weaveJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
-//        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-//        String className = methodSignature.getDeclaringType().getSimpleName();
-//        String methodName = methodSignature.getName();
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        String className = methodSignature.getDeclaringType().getSimpleName();
+        String methodName = methodSignature.getName();
         Log.e("do it", "do it before");
 //        final StopWatch stopWatch = new StopWatch();
 //        stopWatch.start();
@@ -53,7 +55,11 @@ public class TraceAspect {
 //        stopWatch.stop();
 //
 //        DebugLog.log(className, buildLogMessage(methodName, stopWatch.getTotalTimeMillis()));
-
+        Object[] args = joinPoint.getArgs();
+        if (null != args && args.length > 0) {
+            View view = (View) args[0];
+            Log.e("do it", "view id :" + view.getId());
+        }
         return result;
     }
 

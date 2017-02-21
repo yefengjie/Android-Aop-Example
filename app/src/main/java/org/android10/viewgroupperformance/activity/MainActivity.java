@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
 import org.android10.viewgroupperformance.R;
 
 public class MainActivity extends Activity {
