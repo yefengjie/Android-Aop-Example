@@ -6,6 +6,7 @@ import org.aspectj.tools.ajc.Main
 buildscript {
   repositories {
     mavenCentral()
+    jcenter()
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:2.2.3'

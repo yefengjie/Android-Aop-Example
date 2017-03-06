@@ -47,7 +47,14 @@ public class TraceAspect {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String className = methodSignature.getDeclaringType().getSimpleName();
         String methodName = methodSignature.getName();
+        methodSignature.getParameterNames();
+        methodSignature.getParameterTypes();
+        methodSignature.getDeclaringType().getSimpleName();
+        methodSignature.getDeclaringTypeName();
+        methodSignature.getExceptionTypes();
+        methodSignature.getName();
         Log.e("do it", "do it before");
+        Log.e("do it", "" + className + " _" + methodName);
 //        final StopWatch stopWatch = new StopWatch();
 //        stopWatch.start();
         Object result = joinPoint.proceed();
@@ -59,6 +66,11 @@ public class TraceAspect {
         if (null != args && args.length > 0) {
             View view = (View) args[0];
             Log.e("do it", "view id :" + view.getId());
+            Log.e("do it", "" + args.length);
+            Log.e("do it", "" + view.getContext().getResources().getResourceEntryName(view.getId()));
+            Log.e("do it", "" + view.getContext().getResources().getResourceName(view.getId()));
+            Log.e("do it", "" + view.getContext().getResources().getResourcePackageName(view.getId()));
+            Log.e("do it", "" + view.getContext().getResources().getResourceTypeName(view.getId()));
         }
         return result;
     }
